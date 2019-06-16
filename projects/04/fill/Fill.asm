@@ -12,3 +12,59 @@
 // the screen should remain fully clear as long as no key is pressed.
 
 // Put your code here.
+    
+    // store current address of screen
+    @SCREEN
+    D = A
+    @R0
+    M = D
+    
+    // store biggest address of screen
+    @24576
+    D = A
+    @R1 
+    M = D
+
+(LOOP)
+    @KBD
+    D = M
+
+    @CLEAR
+    D; JEQ
+
+(FILL)
+    @R1
+    D = M
+    @R0
+    D = D - M
+
+    @LOOP
+    D; JEQ
+    
+    @R0
+    D = M
+    A = D
+    M = -1
+
+    @R0
+    M = D + 1
+
+    @FILL
+    0; JMP
+
+(CLEAR)
+    @SCREEN
+    D = A
+    @R0
+    D = D - M
+
+    @LOOP
+    D; JEQ
+
+    @R0
+    M = M - 1
+    A = M
+    M = 0
+
+    @CLEAR
+    0; JMP
